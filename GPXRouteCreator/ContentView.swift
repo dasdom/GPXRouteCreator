@@ -20,14 +20,13 @@ struct ContentView: View {
   @State var addTime = false
   @State var minutesBetween = 5
   @State var showDocumentsPicker = false
-  let dateFormatter: DateFormatter
-  
-  init() {
-    dateFormatter = DateFormatter()
-    dateFormatter.dateStyle = .short
-    dateFormatter.timeStyle = .short
-  }
-  
+  static let dateFormatter: DateFormatter = {
+    let formatter = DateFormatter()
+    formatter.dateStyle = .short
+    formatter.timeStyle = .short
+    return formatter
+  }()
+
   var body: some View {
     GeometryReader { geometry in
       HStack {
@@ -63,7 +62,7 @@ struct ContentView: View {
           List(self.gpxEntries) { entry in
             VStack {
               Text("\(entry.coordinate.latitude), \(entry.coordinate.longitude)")
-              Text("\(self.dateFormatter.string(from: entry.date))")
+                Text("\(ContentView.dateFormatter.string(from: entry.date))")
             }
             .foregroundColor(Color(UIColor.label))
           }

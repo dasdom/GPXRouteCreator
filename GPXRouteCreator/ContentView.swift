@@ -7,20 +7,19 @@ import CoreLocation
 
 struct ContentView: View {
   
-  let tap = TapGesture()
-  @State var gpxEntries: [GPXEntry] = []
-  @State var tappedCoordinate: CLLocationCoordinate2D? {
+  @State private var gpxEntries: [GPXEntry] = []
+  @State private  var tappedCoordinate: CLLocationCoordinate2D? {
     didSet {
       if let coordinate = tappedCoordinate {
         coordinateString = "\(coordinate.latitude), \(coordinate.longitude)"
       }
     }
   }
-  @State var coordinateString = "Tap a location you like to add."
-  @State var addTime = false
-  @State var minutesBetween = 5
-  @State var showDocumentsPicker = false
-  let dateFormatter: DateFormatter
+  @State private var coordinateString = "Tap a location you like to add."
+  @State private var addTime = false
+  @State private var minutesBetween = 5
+  @State private var showDocumentsPicker = false
+  private let dateFormatter: DateFormatter
   
   init() {
     dateFormatter = DateFormatter()
@@ -34,6 +33,7 @@ struct ContentView: View {
         ZStack(alignment: .bottomTrailing) {
           MapView(tappedCallback: { coordinate in
             self.tappedCoordinate = coordinate
+            self.add(coordinate: coordinate)
           }, gpxEntries: self.$gpxEntries)
           
           VStack(alignment: .center, spacing: 10) {
@@ -45,13 +45,13 @@ struct ContentView: View {
             }) {
               Text("\(self.minutesBetween) min to last")
             }
-            Button("Add") {
-              if let coordinate = self.tappedCoordinate {
-                let lastDate = self.gpxEntries.last?.date ?? Date()
-                let date = Date(timeInterval: TimeInterval(self.minutesBetween*60), since: lastDate)
-                self.gpxEntries.append(GPXEntry(coordinate: coordinate, date: date))
-              }
-            }
+//            Button("Add") {
+//              if let coordinate = self.tappedCoordinate {
+//                let lastDate = self.gpxEntries.last?.date ?? Date()
+//                let date = Date(timeInterval: TimeInterval(self.minutesBetween*60), since: lastDate)
+//                self.gpxEntries.append(GPXEntry(coordinate: coordinate, date: date))
+//              }
+//            }
           }
           .padding()
           .frame(width: 400)
@@ -90,6 +90,12 @@ struct ContentView: View {
           }
       )
     }
+  }
+  
+  func add(coordinate: CLLocationCoordinate2D) {
+    let lastDate = self.gpxEntries.last?.date ?? Date()
+    let date = Date(timeInterval: TimeInterval(self.minutesBetween*60), since: lastDate)
+    self.gpxEntries.append(GPXEntry(coordinate: coordinate, date: date))
   }
   
   func export() {

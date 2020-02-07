@@ -15,7 +15,7 @@ struct MapView : UIViewRepresentable {
   
   func makeUIView(context: Context) -> MKMapView {
     let mapView = MKMapView()
-    let longPressGesture = UITapGestureRecognizer(target: context.coordinator,
+    let longPressGesture = UILongPressGestureRecognizer(target: context.coordinator,
                                                        action: #selector(Coordinator.addLocation))
     
     mapView.addGestureRecognizer(longPressGesture)
@@ -38,16 +38,16 @@ struct MapView : UIViewRepresentable {
       self.tappedCallback = tappedCallback
     }
 
-    @objc func addLocation(_ sender: UITapGestureRecognizer) {
+    @objc func addLocation(_ sender: UILongPressGestureRecognizer) {
       
       print("sender state: \(sender.state)")
-//      if sender.state == .began {
+      if sender.state == .began {
         let point = sender.location(in: sender.view)
         if let mapView = sender.view as? MKMapView {
           let coordinate = mapView.convert(point, toCoordinateFrom: mapView)
           tappedCallback(coordinate)
         }
-//      }
+      }
     }
   }
   

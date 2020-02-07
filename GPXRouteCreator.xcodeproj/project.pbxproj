@@ -13,6 +13,10 @@
 		F2A8EEC123ED66F5003D0D4A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F2A8EEC023ED66F5003D0D4A /* Assets.xcassets */; };
 		F2A8EEC423ED66F5003D0D4A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F2A8EEC323ED66F5003D0D4A /* Preview Assets.xcassets */; };
 		F2A8EEC723ED66F5003D0D4A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F2A8EEC523ED66F5003D0D4A /* LaunchScreen.storyboard */; };
+		F2A8EED023ED6813003D0D4A /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A8EECF23ED6813003D0D4A /* MapView.swift */; };
+		F2A8EED223ED8E56003D0D4A /* GPXEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A8EED123ED8E56003D0D4A /* GPXEntry.swift */; };
+		F2A8EED423ED9582003D0D4A /* FileManagerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A8EED323ED9582003D0D4A /* FileManagerExtension.swift */; };
+		F2A8EED623ED9CD7003D0D4A /* DocumentPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A8EED523ED9CD7003D0D4A /* DocumentPicker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +28,11 @@
 		F2A8EEC323ED66F5003D0D4A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		F2A8EEC623ED66F5003D0D4A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F2A8EEC823ED66F5003D0D4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F2A8EECE23ED6726003D0D4A /* GPXRouteCreator.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GPXRouteCreator.entitlements; sourceTree = "<group>"; };
+		F2A8EECF23ED6813003D0D4A /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		F2A8EED123ED8E56003D0D4A /* GPXEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPXEntry.swift; sourceTree = "<group>"; };
+		F2A8EED323ED9582003D0D4A /* FileManagerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerExtension.swift; sourceTree = "<group>"; };
+		F2A8EED523ED9CD7003D0D4A /* DocumentPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPicker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,9 +65,14 @@
 		F2A8EEB923ED66EB003D0D4A /* GPXRouteCreator */ = {
 			isa = PBXGroup;
 			children = (
+				F2A8EECE23ED6726003D0D4A /* GPXRouteCreator.entitlements */,
 				F2A8EEBA23ED66EB003D0D4A /* AppDelegate.swift */,
 				F2A8EEBC23ED66EB003D0D4A /* SceneDelegate.swift */,
 				F2A8EEBE23ED66EB003D0D4A /* ContentView.swift */,
+				F2A8EED123ED8E56003D0D4A /* GPXEntry.swift */,
+				F2A8EECF23ED6813003D0D4A /* MapView.swift */,
+				F2A8EED523ED9CD7003D0D4A /* DocumentPicker.swift */,
+				F2A8EED323ED9582003D0D4A /* FileManagerExtension.swift */,
 				F2A8EEC023ED66F5003D0D4A /* Assets.xcassets */,
 				F2A8EEC523ED66F5003D0D4A /* LaunchScreen.storyboard */,
 				F2A8EEC823ED66F5003D0D4A /* Info.plist */,
@@ -147,8 +161,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				F2A8EEBB23ED66EB003D0D4A /* AppDelegate.swift in Sources */,
+				F2A8EED423ED9582003D0D4A /* FileManagerExtension.swift in Sources */,
+				F2A8EED023ED6813003D0D4A /* MapView.swift in Sources */,
 				F2A8EEBD23ED66EB003D0D4A /* SceneDelegate.swift in Sources */,
 				F2A8EEBF23ED66EB003D0D4A /* ContentView.swift in Sources */,
+				F2A8EED623ED9CD7003D0D4A /* DocumentPicker.swift in Sources */,
+				F2A8EED223ED8E56003D0D4A /* GPXEntry.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,19 +302,22 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = GPXRouteCreator/GPXRouteCreator.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"GPXRouteCreator/Preview Content\"";
 				DEVELOPMENT_TEAM = Q6PD97MRX4;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = GPXRouteCreator/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = de.dasdom.GPXRouteCreator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
 		};
@@ -304,19 +325,22 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = GPXRouteCreator/GPXRouteCreator.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"GPXRouteCreator/Preview Content\"";
 				DEVELOPMENT_TEAM = Q6PD97MRX4;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = GPXRouteCreator/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = de.dasdom.GPXRouteCreator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
 		};

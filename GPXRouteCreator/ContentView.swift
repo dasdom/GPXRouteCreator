@@ -8,6 +8,7 @@ import CoreLocation
 struct ContentView: View {
   
   @State private var gpxEntries: [GPXEntry] = []
+  @State private var locations: [Location] = []
   @State private  var tappedCoordinate: CLLocationCoordinate2D? {
     didSet {
       if let coordinate = tappedCoordinate {
@@ -111,7 +112,10 @@ struct ContentView: View {
     let lastDate = self.gpxEntries.last?.date ?? Date()
     let date = Date(timeInterval: TimeInterval(self.secondsBetween), since: lastDate)
     self.gpxEntries.append(GPXEntry(coordinate: coordinate, date: date))
-  }
+    locations.append(Location(id: locations.count + 1,
+                              coordinate: coordinate,
+                              date: date))
+}
   
   func export() {
     var exportStrings: [String] = ["<?xml version=\"1.0\"?>"]
@@ -119,11 +123,9 @@ struct ContentView: View {
     
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
-    
-    for gpxEntry in gpxEntries {
-      exportStrings.append("  <wpt lat=\"\(gpxEntry.coordinate.latitude)\" lon=\"\(gpxEntry.coordinate.longitude)\">")
-      exportStrings.append("    <time>\(dateFormatter.string(from: gpxEntry.date))</time>")
-      exportStrings.append("  </wpt>")
+
+    locations.forEach { location in
+        exportStrings.append(location.gpx)
     }
     
     exportStrings.append("\n</gpx>")

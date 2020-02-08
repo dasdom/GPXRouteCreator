@@ -33,7 +33,7 @@ struct Location: Identifiable {
 
     var gpx: String {
         #"""
-        <wpt id="\#(id) lat="\#(coordinate.latitude)" lon="\#(coordinate.longitude)">
+        <wpt lat="\#(coordinate.latitude)" lon="\#(coordinate.longitude)">
         <time>\#(Location.dateFormatter.string(from: date))</time>
         </wpt>
         """#

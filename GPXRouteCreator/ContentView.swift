@@ -7,7 +7,6 @@ import CoreLocation
 
 struct ContentView: View {
   
-  @State private var gpxEntries: [GPXEntry] = []
   @State private var locations: [Location] = []
   @State private  var tappedCoordinate: CLLocationCoordinate2D? {
     didSet {
@@ -47,7 +46,7 @@ struct ContentView: View {
           MapView(tappedCallback: { coordinate in
             self.tappedCoordinate = coordinate
             self.add(coordinate: coordinate)
-          }, gpxEntries: self.$gpxEntries)
+          }, locations: self.$locations)
           
           VStack(alignment: .center, spacing: 10) {
             Text(self.coordinateString)
@@ -76,7 +75,7 @@ struct ContentView: View {
         }
         VStack {
           //        NavigationView {
-          List(self.gpxEntries) { entry in
+          List(self.locations) { entry in
             VStack {
               Text("\(entry.coordinate.latitude), \(entry.coordinate.longitude)")
                 Text("\(ContentView.dateFormatter.string(from: entry.date))")
@@ -109,9 +108,8 @@ struct ContentView: View {
   }
   
   func add(coordinate: CLLocationCoordinate2D) {
-    let lastDate = self.gpxEntries.last?.date ?? Date()
+    let lastDate = self.locations.last?.date ?? Date()
     let date = Date(timeInterval: TimeInterval(self.secondsBetween), since: lastDate)
-    self.gpxEntries.append(GPXEntry(coordinate: coordinate, date: date))
     locations.append(Location(id: locations.count + 1,
                               coordinate: coordinate,
                               date: date))

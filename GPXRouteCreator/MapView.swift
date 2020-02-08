@@ -10,7 +10,7 @@ struct MapView : UIViewRepresentable {
   
   // Tap handling from https://stackoverflow.com/a/56518293/498796
   var tappedCallback: ((CLLocationCoordinate2D) -> Void)
-  @Binding var gpxEntries: [GPXEntry]
+  @Binding var locations: [Location]
   let delegate = MapViewDelegate()
   
   func makeUIView(context: Context) -> MKMapView {
@@ -24,11 +24,15 @@ struct MapView : UIViewRepresentable {
   
   func updateUIView(_ mapView: MKMapView, context: Context) {
     mapView.removeOverlays(mapView.overlays)
-    let coordinates = gpxEntries.map({ $0.coordinate })
+    let coordinates = locations.map({ $0.coordinate })
     let overlay = MKPolyline(coordinates: coordinates,
                              count: coordinates.count)
     mapView.delegate = delegate
     mapView.addOverlay(overlay)
+
+    locations.forEach { location in
+        mapView.addAnnotation(location.pointAnnotation)
+    }
   }
   
   class Coordinator : NSObject {

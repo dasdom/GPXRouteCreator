@@ -17,13 +17,25 @@ struct ContentView: View {
   }
   @State private var coordinateString = "Tap a location you like to add."
   @State private var addTime = false
-  @State private var minutesBetween = 5
   @State private var showDocumentsPicker = false
+  @State private var secondsBetween = 60
+  private var timeDiffText: String {
+    var strings: [String] = []
+    let minutes = secondsBetween / 60
+    let seconds = secondsBetween % 60
+    if minutes > 0 {
+      strings.append("\(minutes) min")
+    }
+    if seconds > 0 {
+      strings.append("\(seconds) s")
+    }
+    return strings.joined(separator: " ")
+  }
   
   static let dateFormatter: DateFormatter = {
     let formatter = DateFormatter()
     formatter.dateStyle = .short
-    formatter.timeStyle = .short
+    formatter.timeStyle = .medium
     return formatter
   }()
 
@@ -39,19 +51,22 @@ struct ContentView: View {
           VStack(alignment: .center, spacing: 10) {
             Text(self.coordinateString)
             Stepper(onIncrement: {
-              self.minutesBetween += 1
+              if self.secondsBetween >= 120 {
+                self.secondsBetween += 60
+              } else {
+                self.secondsBetween += 10
+              }
             }, onDecrement: {
-              self.minutesBetween -= 1
+              if self.secondsBetween <= 10 {
+                self.secondsBetween -= 1
+              } else if self.secondsBetween < 0 {
+                self.secondsBetween = 0
+              } else {
+                self.secondsBetween -= 10
+              }
             }) {
-              Text("\(self.minutesBetween) min to last")
+              Text("\(self.timeDiffText) to previous entry")
             }
-//            Button("Add") {
-//              if let coordinate = self.tappedCoordinate {
-//                let lastDate = self.gpxEntries.last?.date ?? Date()
-//                let date = Date(timeInterval: TimeInterval(self.minutesBetween*60), since: lastDate)
-//                self.gpxEntries.append(GPXEntry(coordinate: coordinate, date: date))
-//              }
-//            }
           }
           .padding()
           .frame(width: 400)
@@ -94,7 +109,7 @@ struct ContentView: View {
   
   func add(coordinate: CLLocationCoordinate2D) {
     let lastDate = self.gpxEntries.last?.date ?? Date()
-    let date = Date(timeInterval: TimeInterval(self.minutesBetween*60), since: lastDate)
+    let date = Date(timeInterval: TimeInterval(self.secondsBetween), since: lastDate)
     self.gpxEntries.append(GPXEntry(coordinate: coordinate, date: date))
   }
   

@@ -75,12 +75,25 @@ struct ContentView: View {
         }
         VStack {
           //        NavigationView {
-          List(self.locations) { entry in
-            VStack {
-              Text("\(entry.coordinate.latitude), \(entry.coordinate.longitude)")
-                Text("\(ContentView.dateFormatter.string(from: entry.date))")
+          List {
+            ForEach(self.locations) { location in
+              VStack {
+                Text("\(location.coordinate.latitude), \(location.coordinate.longitude)")
+                Text("\(ContentView.dateFormatter.string(from: location.date))")
+              }
+              .foregroundColor(Color(UIColor.label))
+              .onLongPressGesture {
+                if let index = self.locations.firstIndex(where: { (temp) -> Bool in
+                  temp.date == location.date
+                }) {
+                  self.locations.remove(at: index)
+                }
+              }
             }
-            .foregroundColor(Color(UIColor.label))
+//            .onMove { from, to in
+//              print("from: \(from), to: \(to)")
+//              self.locations.move(fromOffsets: from, toOffset: to)
+//            }
           }
           HStack {
             Button(action: {

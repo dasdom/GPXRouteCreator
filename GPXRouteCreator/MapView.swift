@@ -23,16 +23,19 @@ struct MapView : UIViewRepresentable {
   }
   
   func updateUIView(_ mapView: MKMapView, context: Context) {
+    
     mapView.removeOverlays(mapView.overlays)
+    mapView.removeAnnotations(mapView.annotations)
+
     let coordinates = locations.map({ $0.coordinate })
     let overlay = MKPolyline(coordinates: coordinates,
                              count: coordinates.count)
     mapView.delegate = delegate
     mapView.addOverlay(overlay)
 
-    locations.forEach { location in
-        mapView.addAnnotation(location.pointAnnotation)
-    }
+//    locations.forEach { location in
+//        mapView.addAnnotation(location.pointAnnotation)
+//    }
   }
   
   class Coordinator : NSObject {
